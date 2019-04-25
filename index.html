@@ -1,16 +1,45 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Brunch</title>
-  <link rel="stylesheet" href="/app.css">
-  <script src="/app.js"></script>
-  <script>
-    require('initialize');
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minimal</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="script" href="serviceworker.js">
+    <meta name="theme-color" content="#052767" />
+    <script>
+        var Module = {};
+        var __cargo_web = {};
+        Object.defineProperty(Module, 'canvas', {
+            get: function () {
+                if (__cargo_web.canvas) {
+                    return __cargo_web.canvas;
+                }
+
+                var canvas = document.createElement('canvas');
+                document.querySelector('body').appendChild(canvas);
+                __cargo_web.canvas = canvas;
+
+                return canvas;
+            }
+        });
+    </script>
 </head>
 
 <body>
-
+    <noscript>This website requires Javascript to run. Please allow Javascript in your settings.</noscript>
+    <script src="minimal.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            console.log('Registering service worker now');
+            navigator.serviceWorker.register('/serviceworker.js')
+                .then(function () {
+                    console.log('Service Worker Registered');
+                });
+        }
+    </script>
 </body>
+
+</html>
